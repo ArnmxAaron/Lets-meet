@@ -13,7 +13,8 @@ const firebaseConfig = {
 };
 
 // --- GLOBAL SINGLETON GUARD ---
-// We attach the app to 'global' so different build workers don't conflict
+// This ensures that across multiple build workers and page pre-renders,
+// Firebase is only initialized once.
 let app;
 
 if (!firebase.apps.length) {
@@ -22,12 +23,13 @@ if (!firebase.apps.length) {
     app = firebase.app();
 }
 
-// Export specific services
+// Named exports for Firebase services
 export const db = app.firestore();
 export const auth = app.auth();
 export { firebase };
 
-// Supabase
+// --- SUPABASE INITIALIZATION ---
+// Added this export to fix the "Module has no exported member 'supabase'" error
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
