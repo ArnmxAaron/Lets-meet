@@ -4,6 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import { db } from "@/lib/firebaseConfig"; // Import your Firebase DB
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs'; // Add this to ensure it stays on the standard server runtime
+export const fetchCache = 'force-no-store';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

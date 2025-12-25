@@ -3,9 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
-export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs'; // Add this to ensure it stays on the standard server runtime
-export const fetchCache = 'force-no-store';
+
 
 // Initialize Supabase
 const supabase = createClient(
