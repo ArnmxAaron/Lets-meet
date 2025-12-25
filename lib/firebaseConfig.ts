@@ -13,21 +13,21 @@ const firebaseConfig = {
 };
 
 // --- SINGLETON INITIALIZATION ---
-// This check is the "key" to fixing your error
+// This check is required because Next.js builds multiple pages at once.
 let app;
 
 if (!firebase.apps.length) {
     app = firebase.initializeApp(firebaseConfig);
 } else {
-    app = firebase.app();
+    app = firebase.app(); // Re-use the existing connection
 }
 
-// Named exports for specific services
+// Named exports for your pages to use
 export const db = app.firestore();
 export const auth = app.auth();
 export { firebase };
 
-// Supabase client
+// Supabase client initialization
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
