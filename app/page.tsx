@@ -280,7 +280,7 @@ function HomePage() {
           <button onClick={() => setIsDrawerOpen(true)} className="w-10 h-10 flex items-center justify-center text-slate-600">
             <i className="fas fa-bars-staggered text-lg"></i>
           </button>
-          <h1 className="font-black text-xl text-blue-600 tracking-tighter">LM.</h1>
+          <h1 className="font-black text-xl text-blue-600 tracking-tighter">Lets Meet.</h1>
         </div>
         
         <div className="flex items-center gap-4">
