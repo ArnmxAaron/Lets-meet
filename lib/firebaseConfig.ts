@@ -13,16 +13,13 @@ const firebaseConfig = {
 };
 
 // --- SINGLETON INITIALIZATION ---
+// This check is the "key" to fixing your error
 let app;
 
-if (typeof window !== 'undefined' || !firebase.apps.length) {
-    if (!firebase.apps.length) {
-        app = firebase.initializeApp(firebaseConfig);
-    } else {
-        app = firebase.app();
-    }
+if (!firebase.apps.length) {
+    app = firebase.initializeApp(firebaseConfig);
 } else {
-    app = firebase.app(); 
+    app = firebase.app();
 }
 
 // Named exports for specific services
