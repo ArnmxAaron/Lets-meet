@@ -12,21 +12,14 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
+// --- HYBRID INITIALIZATION ---
 let app;
 
-try {
-    if (!firebase.apps.length) {
-        app = firebase.initializeApp(firebaseConfig);
-    } else {
-        app = firebase.app();
-    }
-} catch (error: any) {
-    // If we hit the 'duplicate-app' error, just get the existing instance
-    if (error.code === 'app/duplicate-app' || /already exists/.test(error.message)) {
-        app = firebase.app();
-    } else {
-        throw error;
-    }
+// Use 'getApps' logic which is more stable in Next.js builds
+if (!firebase.apps.length) {
+    app = firebase.initializeApp(firebaseConfig);
+} else {
+    app = firebase.app();
 }
 
 export const db = app.firestore();
