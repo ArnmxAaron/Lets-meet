@@ -12,24 +12,27 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// --- GLOBAL SINGLETON GUARD ---
-// This ensures that across multiple build workers and page pre-renders,
-// Firebase is only initialized once.
 let app;
 
-if (!firebase.apps.length) {
-    app = firebase.initializeApp(firebaseConfig);
-} else {
-    app = firebase.app();
+try {
+    if (!firebase.apps.length) {
+        app = firebase.initializeApp(firebaseConfig);
+    } else {
+        app = firebase.app();
+    }
+} catch (error: any) {
+    // If we hit the 'duplicate-app' error, just get the existing instance
+    if (error.code === 'app/duplicate-app' || /already exists/.test(error.message)) {
+        app = firebase.app();
+    } else {
+        throw error;
+    }
 }
 
-// Named exports for Firebase services
 export const db = app.firestore();
 export const auth = app.auth();
 export { firebase };
 
-// --- SUPABASE INITIALIZATION ---
-// Added this export to fix the "Module has no exported member 'supabase'" error
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''

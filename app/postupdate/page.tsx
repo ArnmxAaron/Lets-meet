@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 // Initialize Supabase
 const supabase = createClient(
