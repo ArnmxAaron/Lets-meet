@@ -12,22 +12,22 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// --- SINGLETON INITIALIZATION ---
-// This check is required because Next.js builds multiple pages at once.
+// --- GLOBAL SINGLETON GUARD ---
+// We attach the app to 'global' so different build workers don't conflict
 let app;
 
 if (!firebase.apps.length) {
     app = firebase.initializeApp(firebaseConfig);
 } else {
-    app = firebase.app(); // Re-use the existing connection
+    app = firebase.app();
 }
 
-// Named exports for your pages to use
+// Export specific services
 export const db = app.firestore();
 export const auth = app.auth();
 export { firebase };
 
-// Supabase client initialization
+// Supabase
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
